@@ -1,28 +1,30 @@
 name:                hPDB-examples
-version:             0.99
+version:             0.99.1
+synopsis:            Examples for hPDB library
 stability:           beta
 homepage:            https://github.com/mgajda/hpdb
 package-url:         http://hackage.haskell.org/package/hPDB
-synopsis:            Parser, print and manipulate structures in PDB file format.
-description:         Protein Data Bank file format is a most popular format for holding biomolecule data. This is a very fast parser (below 7s for the largest entry in PDB - 1HTQ which is over 70MB - as compared with 11s of RASMOL 2.7.5, or 2m15s of BioPython with Python 2.6 interpreter.) It is aimed to not only deliver event-based interface, but also a high-level data structure for manipulating data in spirit of BioPython's PDB parser. 
+description:         Protein Data Bank file format is a most popular format for holding biomolecule data.
+  This is a very fast parser (below 7s for the largest entry in PDB - 1HTQ which is over 70MB - as compared with 11s of RASMOL 2.7.5, or 2m15s of BioPython with Python 2.6 interpreter.)
+  It is aimed to not only deliver event-based interface, but also a high-level data structure for manipulating data in spirit of BioPython's PDB parser. 
 category:            Bioinformatics 
 license:             BSD3
 license-file:        LICENSE
 
 author:              Michal J. Gajda
-copyright:           Copyright by Michal J. Gajda '2009-'2012
+copyright:           Copyright by Michal J. Gajda '2009-'2013
 maintainer:          mjgajda@googlemail.com
 bug-reports:         mailto:mjgajda@googlemail.com
 
 build-type:          Simple
 cabal-version:       >=1.8
-tested-with:         GHC==7.4.1, GHC==7.0.3, GHC==7.4.2
+tested-with:         GHC==7.4.1, GHC==7.0.3, GHC==7.4.2, GHC==7.6.1
 --Need to re-test: GHC==6.12.1,  GHC==7.0.4, GHC==7.1.20101026 
 --data-files:          1CRN.pdb, 1HTQ.pdb, 3JYV.pdb
 
 source-repository head
   type:     git
-  location: git://github.com:mgajda/hpdb-examples.git
+  location: https://github.com/mgajda/hPDB-examples
 
 Executable PDB2Fasta
   main-is:          examples/PDB2Fasta.hs
