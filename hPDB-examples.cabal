@@ -2,7 +2,7 @@ name:                hPDB-examples
 version:             0.999
 synopsis:            Examples for hPDB library
 stability:           beta
-homepage:            https://github.com/mgajda/hpdb
+homepage:            https://github.com/mgajda/hpdb-examples
 package-url:         http://hackage.haskell.org/package/hPDB
 description:         Protein Data Bank file format is a most popular format for holding biomolecule data.
   This is a very fast parser (below 7s for the largest entry in PDB - 1HTQ which is over 70MB - as compared with 11s of RASMOL 2.7.5, or 2m15s of BioPython with Python 2.6 interpreter.)
