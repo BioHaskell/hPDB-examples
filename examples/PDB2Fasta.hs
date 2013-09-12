@@ -68,7 +68,7 @@ printFastaRecords opts fname s = if allModels opts
 
 --printFastaRecords fname s = PDB.ifoldM (\() ch -> Prelude.putStrLn $ fastaRecord fname ch) () s
 
-processFile opts fname = do maybePDB <- PDB.parse $ BS.pack fname
+processFile opts fname = do maybePDB <- PDB.parse fname
                             case maybePDB of
                               Nothing        -> return ()
                               Just structure -> printFastaRecords opts fname structure

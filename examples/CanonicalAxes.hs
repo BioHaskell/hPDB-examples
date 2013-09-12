@@ -57,7 +57,7 @@ main = do args <- getArgs
           when (length args /= 2) $ do hPutStrLn stderr "USAGE: CanonicalAxes <input.pdb> <output.pdb>"
                                        exitFailure
           let [inpfname, outfname] = args
-          Just structure <- PDBIO.parse $ BS.pack inpfname
+          Just structure <- PDBIO.parse inpfname
           let ([d1, d2, d3], axes@[yaxis, xaxis, zaxis]) = findAxes structure
           printf "Dimensions: %.2f %.2f %.2f\n" d1 d2 d3
           putStr "Axis 1 (Y): "

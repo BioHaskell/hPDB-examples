@@ -22,9 +22,9 @@ shift v = PDB.imap subCoord
     subCoord (at@Atom { coord = c }) = at { coord = c - v }
 
 main = do [inpfname, outfname] <- getArgs
-          Just structure <- PDB.parse $ BS.pack inpfname
+          Just structure <- PDB.parse inpfname
           let c@(Vector3 x y z) = center structure
           printf "Center %.2f %.2f %.2f\n" x y z
           putStrLn $ show (PDB.numAtoms structure) ++ " atoms."
           let s1 = shift c structure
-          PDB.write s1 $ BS.pack outfname
+          PDB.write s1 outfname

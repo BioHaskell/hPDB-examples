@@ -14,7 +14,7 @@ import System.Exit
 import Bio.PDB.Structure.Elements(atomicMass, assignElement)
 
 main = do args <- getArgs
-          mapM (readAndComputeRg . BS.pack) args
+          mapM readAndComputeRg args
           exitWith ExitSuccess
 
 readAndComputeRg filename =
@@ -25,7 +25,7 @@ readAndComputeRg filename =
      hFlush stdout
      rnf structure `seq` BS.putStrLn " atoms!"
      rg <- return $! radiusOfGyration structure
-     printf "%s: %.2f\n" (BS.unpack filename) rg 
+     printf "%s: %.2f\n" filename rg 
      return rg
 
 -- TODO: consider mass of an atom

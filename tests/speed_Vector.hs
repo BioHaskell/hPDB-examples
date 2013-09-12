@@ -25,10 +25,9 @@ makeVectorTriples n = do l <- makeVectors $ 3*n
 
 main = do testVectorTriples    <- makeVectorTriples    1000
           testVectorQuadruples <- makeVectorQuadruples 1000
-          (C.defaultMain [
-             C.bgroup "dihedral"  $ [C.bench "1000" $ C.nf (map dihe)  testVectorQuadruples],
-             C.bgroup "dihedral2" $ [C.bench "1000" $ C.nf (map dihe2) testVectorQuadruples]
-           ])
+          C.defaultMain [
+            C.bgroup "dihedral"  [C.bench "1000" $ C.nf (map dihe)  testVectorQuadruples],
+            C.bgroup "dihedral2" [C.bench "1000" $ C.nf (map dihe2) testVectorQuadruples]]
   where
     dihe2 (v, w, u, q) = vdihedral2 v w u q
     dihe  (v, w, u, q) = vdihedral  (v-w) (w-u) (u-q)

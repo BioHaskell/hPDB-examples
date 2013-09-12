@@ -42,7 +42,7 @@ main :: IO ()
 main = do
   (progname, [filename]) <- GL.getArgsAndInitialize
   -- First read structure
-  Just structure <- PDBIO.parse $ BS.pack filename
+  Just structure <- PDBIO.parse filename
   -- Initialize OpenGL
   --displayMode $= [With DisplayDepth, With DisplayRGB] -- is it glutInitDisplayModel (GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH)
   setup progname -- setup OpenGL scene model

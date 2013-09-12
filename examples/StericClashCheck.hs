@@ -37,8 +37,8 @@ v3v = id
 size ot =  length . Oct.toList $ ot
 
 main = do [input1, input2] <- Env.getArgs
-          Just structure1 <- PDB.parse $ BS.pack input1
-          Just structure2 <- PDB.parse $ BS.pack input2
+          Just structure1 <- PDB.parse input1
+          Just structure2 <- PDB.parse input2
           print $ clashCheck structure1 structure2
           print "Depths:"
           print . Oct.depth . makeOctree $ structure1

@@ -26,9 +26,9 @@ usage = do hPutStrLn stderr $ concat [ "Usage: SplitModels <input.pdb> <output_p
 main = do lenArgs <- length `fmap` getArgs
           when (lenArgs /= 2) usage
           [inpfname, outfname] <- getArgs
-          Just structure <- PDB.parse $ BS.pack inpfname
+          Just structure <- PDB.parse inpfname
           let splitted = zip [1..] $ splitModels structure
           forM splitted $ \(num, aStructure) ->
             do let fname = outfname ++ show num ++ ".pdb"
                putStrLn $ "Writing " ++ show fname ++ " with " ++ show (numAtoms aStructure) ++ " atoms."
-               PDB.write aStructure $ BS.pack fname
+               PDB.write aStructure fname
