@@ -22,7 +22,7 @@ prop_vproj v      = vproj v v ~== v
 prop_vperpend v w = vproj v w + vperpend v w ~== v
 
 -- | Compute _unsigned_ dihedral between four positions using plane normals formula.
-vdihedral2 :: Vec3D -> Vec3D -> Vec3D -> Vec3D -> Double
+vdihedral2 :: Vector3 -> Vector3 -> Vector3 -> Vector3 -> Double
 vdihedral2 a b c d = if abs dot < 1e-9
                       then asin cross
                       else acos dot

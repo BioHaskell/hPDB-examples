@@ -210,11 +210,11 @@ setup progname = do
   GL.depthFunc                         $= Just GL.Less
    
 -- Assessing dimensions for initial focus
-center :: PDBS.Structure -> Vec3D
+center :: PDBS.Structure -> Vector3
 center structure = average 
   where
     (!average, _count) = PDBI.ifoldl' step (fromIntegral 0, 0) structure
-    step :: (Vec3D, Double) -> PDBS.Atom -> (Vec3D, Double)
+    step :: (Vector3, Double) -> PDBS.Atom -> (Vector3, Double)
     step (!r, !i) at = let i' = i + 1
                        in (coord at |* (1/i') + r |* (i/i'), i')
 
@@ -225,10 +225,10 @@ dims structure = maxv - minv
                                                              vzip max maxv c)) (cs, cs) structure
     !cs = center structure
 
-vec3DToVector3 :: Vec3D -> GL.Vector3 GL.GLdouble
+vec3DToVector3 :: Vector3 -> GL.Vector3 GL.GLdouble
 vec3DToVector3 v = GL.Vector3 x' y' z'
   where
-    (x, y, z) = unpackVec3D v
+    (x, y, z) = unpackVector3 v
     [x', y', z'] :: [GL.GLdouble]  = Prelude.map realToFrac [x, y, z]
 
 renderStructure :: IORef UIState -> PDBS.Structure -> IO ()
