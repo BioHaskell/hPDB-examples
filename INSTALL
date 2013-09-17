@@ -1,0 +1,7 @@
+With a modern Cabal one can install dependencies with:
+`cabal install`.
+
+Some dependencies may require GL/GLUT library headers.
+
+On Ubuntu one can install them using:
+apt-get install freeglut3-dev libgl1-mesa-dev

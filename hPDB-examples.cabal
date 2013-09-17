@@ -19,6 +19,7 @@ cabal-version:       >=1.8
 tested-with:         GHC==7.4.1, GHC==7.0.3, GHC==7.4.2, GHC==7.6.1
 --Need to re-test: GHC==6.12.1,  GHC==7.0.4, GHC==7.1.20101026 
 --data-files:          1CRN.pdb, 1HTQ.pdb, 3JYV.pdb
+extra-source-files:  README.md INSTALL AUTHORS
 
 source-repository head
   type:     git
