@@ -18,7 +18,7 @@ counter   = do r <- get
                return r
 
 runCounterM :: CounterM a -> a
-runCounterM = fst . (flip runState) 1
+runCounterM = fst . flip runState 1
 
 renumberResidues :: (Iterable s Chain) => s -> s
 renumberResidues = imap (\ch -> runCounterM          .
@@ -42,6 +42,6 @@ renumberAtoms = imap (\m -> runCounterM $
 main = do [inpfname, outfname] <- getArgs
           Just structure <- PDB.parse inpfname
           putStrLn $ show (PDB.numAtoms structure) ++ " atoms."
-          let s1 = renumberResidues $ renumberAtoms $ structure
+          let s1 = renumberResidues $ renumberAtoms structure
           PDB.write s1 outfname
 

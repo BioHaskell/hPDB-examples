@@ -1,4 +1,4 @@
-{-# LANGUAGE ScopedTypeVariables, OverloadedStrings, BangPatterns, FlexibleContexts, OverloadedStrings #-}
+{-# LANGUAGE ScopedTypeVariables, OverloadedStrings, BangPatterns, FlexibleContexts #-}
 module Main(main) where
 
 import Bio.PDB as PDB
@@ -14,8 +14,8 @@ import System.Exit
 import Bio.PDB.Structure.Elements(atomicMass, assignElement)
 
 main = do args <- getArgs
-          mapM readAndComputeRg args
-          exitWith ExitSuccess
+          mapM_ readAndComputeRg args
+          exitSuccess
 
 readAndComputeRg filename =
   do Just structure <- PDB.parse filename
@@ -35,8 +35,8 @@ radiusOfGyration :: Iterable Structure Atom => Structure -> Double
 radiusOfGyration structure = avgDistDev
   where
     -- (c -> b -> c) -> c -> a -> c
-    avgDistDev = sqrt ((ifoldl' addDistDev 0.0 structure)/totalMass)
-    addDistDev !total at = total + (vnorm $ coord at - center)**2 * atMass at
+    avgDistDev = sqrt (ifoldl' addDistDev 0.0 structure/totalMass)
+    addDistDev !total at = total + vnorm (coord at - center)**2 * atMass at
     atMass :: Atom -> Double
     atMass at = atomicMass $ case assignElement at of
                                ""        -> "C"

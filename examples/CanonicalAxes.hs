@@ -17,15 +17,14 @@ import Text.Printf
 ifoldrPairs fred fpair e s = pairs
   where
     pairs' a cont = It.ifoldr (\at r -> (at `fpair` a) `fred` r) cont (s :: Structure)
-    pairs         = It.ifoldr (\at r -> pairs' at r) e                (s :: Structure)
+    pairs         = It.ifoldr pairs'                             e    (s :: Structure)
 
 ifoldPairs fred fpair e s = pairs
   where
     pairs' a cont = It.ifoldl' (\r at -> (at `fpair` a) `fred` r) cont (s :: Structure)
-    pairs         = It.ifoldl' (\r at -> pairs' at r) e                (s :: Structure)
+    pairs         = It.ifoldl' pairs'                             e    (s :: Structure)
 
 -- | findAxes finds all three principal axes so that dimensions are ordered.
--- TODO: find a way to loop v1, v2, v3 assignment
 findAxes structure = let v1    = findLongestOrthogonalVector [            ] structure
                          axis1 = vnormalise v1
                          dim1  = vnorm v1
@@ -39,19 +38,8 @@ findAxes structure = let v1    = findLongestOrthogonalVector [            ] stru
   where
     findLongestOrthogonalVector axes = ifoldPairs pickMaxDist (atDistPerpend axes) nullVector 
     nullVector          = fromInteger 0
-    atDistPerpend axes !a1 !a2 = vperpends ((coord a1) - (coord a2)) axes
+    atDistPerpend axes !a1 !a2 = vperpends (coord a1 - coord a2) axes
     pickMaxDist !v1 !v2 = if vnorm v1 > vnorm v2 then v1 else v2
-    
-
-{-center :: Structure -> (Double, Double, Double)
-center s = (realToFrac sx, realToFrac sy, realToFrac sz)
-  where
-    
-    result  = It.ifoldr 
-    maxFst (a, b) (c, d) = if a >= c then (a, b) else (c, d)
-    coords  = [It.ifoldr (\at r -> coord (at :: PDBS.Atom) : r) [] (s :: Structure)]
--}
-
 
 main = do args <- getArgs
           when (length args /= 2) $ do hPutStrLn stderr "USAGE: CanonicalAxes <input.pdb> <output.pdb>"

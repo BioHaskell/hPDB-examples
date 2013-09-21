@@ -19,8 +19,8 @@ import Control.Monad(forM, when)
 splitModels aStructure = map mkStructure . V.toList . models $ aStructure
   where mkStructure aModel = aStructure{ models = V.singleton aModel }
 
-usage = do hPutStrLn stderr $ concat [ "Usage: SplitModels <input.pdb> <output_prefix>"
-                                     , "Splitting of PDB files with multiple MODEL entries." ]
+usage = do hPutStrLn stderr $ "Usage: SplitModels <input.pdb> <output_prefix>" ++
+                              "Splitting of PDB files with multiple MODEL entries."
            exitFailure
 
 main = do lenArgs <- length `fmap` getArgs

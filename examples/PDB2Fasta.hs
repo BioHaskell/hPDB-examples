@@ -2,14 +2,14 @@
 module Main(main) where
 
 import System.Environment(getProgName, getArgs)
-import System.Exit(exitWith, ExitCode(ExitSuccess), ExitCode(..))
+import System.Exit(exitWith, exitSuccess, ExitCode(ExitSuccess), ExitCode(..))
 import System.Console.GetOpt
 import Bio.PDB as PDB
-import Bio.PDB.Fasta(fastaRecord)
 import qualified Data.ByteString.Char8 as BS
 import qualified Data.Map as Map
 import Bio.PDB.Fasta
 import Control.Monad(when)
+import Data.Foldable(forM_)
 
 data Options = Options { gapped    :: Bool,
                          allModels :: Bool
@@ -47,12 +47,12 @@ main = do
   args <- getArgs
   let (actions, filenames, opts) = getOpt RequireOrder options args
   opts <- foldl (>>=) (return defaultOptions) actions
-  when (length filenames == 0) $ exitAfter showHelp (ExitFailure 3) undefined
+  when (null filenames) $ exitAfter showHelp (ExitFailure 3) undefined
   mapM_ (processFile opts) filenames
-  exitWith ExitSuccess -- TODO: only if no errors!
+  exitSuccess -- TODO: only if no errors!
 -- | This program loads a PDB file and outputs FASTA sequences of all chains within
 
-printFastaRecords :: Options -> [Char] -> Structure -> IO ()
+printFastaRecords :: Options -> FilePath -> Structure -> IO ()
 printFastaRecords opts fname s = if allModels opts
                                    then
                                      process s
@@ -69,7 +69,5 @@ printFastaRecords opts fname s = if allModels opts
 --printFastaRecords fname s = PDB.ifoldM (\() ch -> Prelude.putStrLn $ fastaRecord fname ch) () s
 
 processFile opts fname = do maybePDB <- PDB.parse fname
-                            case maybePDB of
-                              Nothing        -> return ()
-                              Just structure -> printFastaRecords opts fname structure
+                            forM_ maybePDB $ printFastaRecords opts fname
 

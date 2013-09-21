@@ -15,6 +15,7 @@ import Bio.PDB.IO                 as PDBIO
 import Bio.PDB.Iterable           as PDBI
 import Data.ByteString.Char8      as BS
 import Bio.PDB.Structure.Vector
+import Data.Vector.V3
 
 data UIState = UIState { manipulationCenter :: Maybe GL.Position
                        , pressedButton      :: Maybe GL.MouseButton
@@ -24,7 +25,7 @@ data UIState = UIState { manipulationCenter :: Maybe GL.Position
                        }
 
 initialUIState = do GL.loadIdentity
-                    initialViewMatrix :: GL.GLmatrix GL.GLdouble <- GL.get $ GL.matrix $ Nothing
+                    initialViewMatrix :: GL.GLmatrix GL.GLdouble <- GL.get $ GL.matrix Nothing
                     --m <- GL.getMatrixComponents GL.ColumnMajor initialViewMatrix
                     return $ cleanUIState initialViewMatrix
 
@@ -49,7 +50,7 @@ main = do
   -- Initialize camera
   initUIState <- initialUIState
   uiState <- newIORef initUIState
-  translateViewMatrix uiState $ vec3DToVector3 $ (-(center structure))
+  translateViewMatrix uiState $ vector3ToGLVector3 (-(center structure))
   translateViewMatrix uiState $ GL.Vector3 0 0 (-frustumMiddle)
   -- Now set callbacks
   GL.displayCallback        $= display uiState structure
@@ -105,7 +106,7 @@ yaxis = GL.Vector3 0 1 0 :: GL.Vector3 GL.GLdouble
 zaxis = GL.Vector3 0 0 1 :: GL.Vector3 GL.GLdouble
 
 negateVector3 :: (Num a) => GL.Vector3 a -> GL.Vector3 a
-negateVector3 = fmap (\a -> (-a))
+negateVector3 = fmap negate
 
 handleKeys :: IORef UIState -> GL.Key -> GL.KeyState -> GL.Modifiers -> GL.Position -> IO ()
 handleKeys uiState (GL.Char 'q')                    GL.Down _modifiers _position = rotateViewMatrix    uiState   10.0  yaxis
@@ -186,8 +187,8 @@ computeRotation (GL.Position curX  curY )
                 (GL.Position w     h    ) = (angle, GL.Vector3 dy dx 0.0)
   where
     [xf, yf, wf, hf] = Prelude.map fromIntegral [curX - initX, curY - initY, w, h]
-    dx = xf / (min hf wf)
-    dy = yf / (min hf wf)
+    dx = xf / min hf wf
+    dy = yf / min hf wf
     angle = 180.0 * sqrt (dx*dx + dy*dy)
     
 getPosChange :: GL.Position -> GL.Position -> GL.Position -> (GL.GLdouble, GL.GLdouble)
@@ -225,21 +226,21 @@ dims structure = maxv - minv
                                                              vzip max maxv c)) (cs, cs) structure
     !cs = center structure
 
-vec3DToVector3 :: Vector3 -> GL.Vector3 GL.GLdouble
-vec3DToVector3 v = GL.Vector3 x' y' z'
+vector3ToGLVector3 :: Vector3 -> GL.Vector3 GL.GLdouble
+vector3ToGLVector3 v = GL.Vector3 x' y' z'
   where
-    (x, y, z) = unpackVector3 v
+    Vector3 x y z = v
     [x', y', z'] :: [GL.GLdouble]  = Prelude.map realToFrac [x, y, z]
 
 renderStructure :: IORef UIState -> PDBS.Structure -> IO ()
-renderStructure uiState structure = PDBI.ifoldM (\_ -> renderAtom) () structure
+renderStructure uiState = PDBI.ifoldM (const renderAtom) ()
   where renderAtom (at :: Atom) = GL.preservingMatrix $ do GL.matrixMode $= GL.Modelview 0
                                                            uiSt <- readIORef uiState
                                                            --m :: GL.GLmatrix GL.GLdouble <- GL.newMatrix GL.ColumnMajor $ currentViewMatrix uiSt
                                                            GL.matrix Nothing $= currentViewMatrix uiSt
                                                            --cm <- GL.getMatrixComponents GL.ColumnMajor $ currentViewMatrix uiSt
                                                            --print cm
-                                                           GL.translate  $ vec3DToVector3 $ PDBS.coord at
+                                                           GL.translate  $ vector3ToGLVector3 $ PDBS.coord at
                                                            GL.renderObject GL.Solid $ GL.Sphere' (realToFrac radius) 40 32 -- much smoother looks!
           where
             radius            = realToFrac $ PDBE.vanDerWaalsRadius $ PDBS.element at
@@ -250,11 +251,12 @@ display uiState structure = do GL.clear [GL.ColorBuffer,
                                renderStructure uiState structure
                                GL.swapBuffers
 
+{-# ANN myOrtho "HLint: ignore Redundant bracket" #-}
 myOrtho w h = let hw = fromIntegral h/fromIntegral w
                   wh = fromIntegral w/fromIntegral h
               in if w <= h
-                   then GL.ortho (-1.5)    (1.5)    (-1.5*hw) (1.5*hw) (-10) (10)
-                   else GL.ortho (-1.5*wh) (1.5*wh) (-1.5)    (1.5)    (-10) (10)
+                   then GL.ortho (-1.5   ) (1.5   ) (-1.5*hw) (1.5*hw) (-10) (10)
+                   else GL.ortho (-1.5*wh) (1.5*wh) (-1.5   ) (1.5   ) (-10) (10)
 
 frustumFront  =    5.0
 frustumBack   = 1000.0
