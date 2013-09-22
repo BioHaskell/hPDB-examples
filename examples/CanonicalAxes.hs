@@ -1,5 +1,4 @@
 {-# LANGUAGE OverloadedStrings, BangPatterns, FlexibleInstances,UndecidableInstances  #-}
-
 module Main where
 
 import Control.Monad(when)
@@ -14,11 +13,13 @@ import Bio.PDB.Structure.Vector
 import Data.List
 import Text.Printf
 
+--ifoldrPairs :: (Iterable Structure b, Iterable Structure b1) =>(t -> c -> c) -> (b -> b1 -> t) -> c -> Structure -> c
 ifoldrPairs fred fpair e s = pairs
   where
     pairs' a cont = It.ifoldr (\at r -> (at `fpair` a) `fred` r) cont (s :: Structure)
     pairs         = It.ifoldr pairs'                             e    (s :: Structure)
 
+--ifoldPairs :: (Iterable Structure b, Iterable Structure c) =>(c -> c -> c) -> (b -> c -> c) -> c -> Structure -> c
 ifoldPairs fred fpair e s = pairs
   where
     pairs' a cont = It.ifoldl' (\r at -> (at `fpair` a) `fred` r) cont (s :: Structure)
@@ -36,9 +37,11 @@ findAxes structure = let v1    = findLongestOrthogonalVector [            ] stru
                          dim3  = vnorm v3
                      in dim1 `seq` dim2 `seq` dim3 `seq` ([dim1, dim2, dim3], [axis1, axis2, axis3])
   where
-    findLongestOrthogonalVector axes = ifoldPairs pickMaxDist (atDistPerpend axes) nullVector 
+    findLongestOrthogonalVector axes = undefined --ifoldPairs pickMaxDist (atDistPerpend axes) nullVector 
     nullVector          = fromInteger 0
-    atDistPerpend axes !a1 !a2 = vperpends (coord a1 - coord a2) axes
+    atDistPerpend ::  [Vector3] -> Atom -> Vector3 -> Vector3
+    atDistPerpend axes !a1 !a2 = vperpends (coord a1 - a2) axes
+    pickMaxDist ::  Vector3 -> Vector3 -> Vector3
     pickMaxDist !v1 !v2 = if vnorm v1 > vnorm v2 then v1 else v2
 
 main = do args <- getArgs
