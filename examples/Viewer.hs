@@ -214,14 +214,14 @@ setup progname = do
 center :: PDBS.Structure -> Vector3
 center structure = average 
   where
-    (!average, _count) = PDBI.ifoldl' step (fromIntegral 0, 0) structure
+    (!average, _count) = PDBI.itfoldl' step (fromIntegral 0, 0) structure
     step :: (Vector3, Double) -> PDBS.Atom -> (Vector3, Double)
     step (!r, !i) at = let i' = i + 1
                        in (coord at |* (1/i') + r |* (i/i'), i')
 
 dims structure = maxv - minv
   where
-    (!minv, !maxv) = PDBI.ifoldl' (\(!minv, !maxv) at -> let c = coord (at :: PDBS.Atom)
+    (!minv, !maxv) = PDBI.itfoldl' (\(!minv, !maxv) at -> let c = coord (at :: PDBS.Atom)
                                                          in (vzip min minv c,
                                                              vzip max maxv c)) (cs, cs) structure
     !cs = center structure
@@ -233,7 +233,7 @@ vector3ToGLVector3 v = GL.Vector3 x' y' z'
     [x', y', z'] :: [GL.GLdouble]  = Prelude.map realToFrac [x, y, z]
 
 renderStructure :: IORef UIState -> PDBS.Structure -> IO ()
-renderStructure uiState = PDBI.ifoldM (const renderAtom) ()
+renderStructure uiState = PDBI.itfoldM (const renderAtom) ()
   where renderAtom (at :: Atom) = GL.preservingMatrix $ do GL.matrixMode $= GL.Modelview 0
                                                            uiSt <- readIORef uiState
                                                            --m :: GL.GLmatrix GL.GLdouble <- GL.newMatrix GL.ColumnMajor $ currentViewMatrix uiSt

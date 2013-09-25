@@ -12,12 +12,12 @@ import Data.Vector.V3
 center :: PDB.Structure -> Vector3
 center s = avgv
   where
-    sumv = ifoldl' addCoord 0 (s :: PDB.Structure)
+    sumv = itfoldl' addCoord 0 (s :: PDB.Structure)
     n = realToFrac . fromIntegral . PDB.numAtoms $ s
     addCoord v (PDB.Atom { coord   = c }) = v+c
     avgv = (1/n) *| sumv
 
-shift v = PDB.imap subCoord
+shift v = PDB.itmap subCoord
   where
     subCoord (at@Atom { coord = c }) = at { coord = c - v }
 

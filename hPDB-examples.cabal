@@ -1,5 +1,5 @@
 name:                hPDB-examples
-version:             0.999
+version:             0.9999
 synopsis:            Examples for hPDB library
 stability:           beta
 homepage:            https://github.com/mgajda/hpdb-examples
@@ -28,7 +28,7 @@ source-repository head
 Executable PDB2Fasta
   main-is:          examples/PDB2Fasta.hs
   ghc-options:      -fspec-constr-count=4 -O3 
-  build-depends:    base>=4.0, base <4.7, bytestring, ghc-prim, directory, mtl, template-haskell, vector, AC-Vector, containers, deepseq, QuickCheck >= 2.5.0.0, text>=0.11.1.13, hPDB >= 0.999, iterable >=1.0
+  build-depends:    base>=4.0, base <4.7, bytestring, ghc-prim, directory, mtl, template-haskell, vector, AC-Vector, containers, deepseq, QuickCheck >= 2.5.0.0, text>=0.11.1.13, hPDB >= 0.9999, iterable >=2.0
   other-extensions:       ScopedTypeVariables OverloadedStrings BangPatterns NoMonomorphismRestriction EmptyDataDecls MagicHash
 
 Executable ShiftToCenter

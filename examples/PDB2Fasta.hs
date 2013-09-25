@@ -61,12 +61,12 @@ printFastaRecords opts fname s = if allModels opts
                                        Nothing -> Prelude.putStrLn $ "No models found within file '" ++ fname ++ "'."
                                        Just m  -> process m
   where
-    process = PDB.ifoldM (\() ch -> Prelude.putStrLn $ mkRecord fname ch) ()
+    process = PDB.itfoldM (\() ch -> Prelude.putStrLn $ mkRecord fname ch) ()
     mkRecord = if gapped opts
                  then fastaGappedRecord
                  else fastaRecord 
 
---printFastaRecords fname s = PDB.ifoldM (\() ch -> Prelude.putStrLn $ fastaRecord fname ch) () s
+--printFastaRecords fname s = PDB.itfoldM (\() ch -> Prelude.putStrLn $ fastaRecord fname ch) () s
 
 processFile opts fname = do maybePDB <- PDB.parse fname
                             forM_ maybePDB $ printFastaRecords opts fname

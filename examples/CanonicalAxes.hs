@@ -1,4 +1,5 @@
-{-# LANGUAGE OverloadedStrings, BangPatterns, FlexibleInstances,UndecidableInstances  #-}
+{-# LANGUAGE OverloadedStrings, BangPatterns, FlexibleInstances,UndecidableInstances, FlexibleContexts  #-}
+
 module Main where
 
 import Control.Monad(when)
@@ -13,17 +14,17 @@ import Bio.PDB.Structure.Vector
 import Data.List
 import Text.Printf
 
---ifoldrPairs :: (Iterable Structure b, Iterable Structure b1) =>(t -> c -> c) -> (b -> b1 -> t) -> c -> Structure -> c
-ifoldrPairs fred fpair e s = pairs
+itfoldrPairs :: (Iterable Structure a) =>(b -> c -> c) -> (a -> a -> b) -> c -> Structure -> c
+itfoldrPairs fred fpair e s = pairs
   where
-    pairs' a cont = It.ifoldr (\at r -> (at `fpair` a) `fred` r) cont (s :: Structure)
-    pairs         = It.ifoldr pairs'                             e    (s :: Structure)
+    pairs' a cont = It.itfoldr (\at r -> (at `fpair` a) `fred` r) cont (s :: Structure)
+    pairs         = It.itfoldr pairs'                             e    (s :: Structure)
 
---ifoldPairs :: (Iterable Structure b, Iterable Structure c) =>(c -> c -> c) -> (b -> c -> c) -> c -> Structure -> c
-ifoldPairs fred fpair e s = pairs
+itfoldPairs :: (Iterable Structure a) =>(b -> c -> c) -> (a -> a -> b) -> c -> Structure -> c
+itfoldPairs fred fpair e s = pairs
   where
-    pairs' a cont = It.ifoldl' (\r at -> (at `fpair` a) `fred` r) cont (s :: Structure)
-    pairs         = It.ifoldl' pairs'                             e    (s :: Structure)
+    pairs' a cont = It.itfoldl' (\r at -> (at `fpair` a) `fred` r) cont (s :: Structure)
+    pairs         = It.itfoldl' (flip pairs')                      e    (s :: Structure)
 
 -- | findAxes finds all three principal axes so that dimensions are ordered.
 findAxes structure = let v1    = findLongestOrthogonalVector [            ] structure
@@ -37,11 +38,9 @@ findAxes structure = let v1    = findLongestOrthogonalVector [            ] stru
                          dim3  = vnorm v3
                      in dim1 `seq` dim2 `seq` dim3 `seq` ([dim1, dim2, dim3], [axis1, axis2, axis3])
   where
-    findLongestOrthogonalVector axes = undefined --ifoldPairs pickMaxDist (atDistPerpend axes) nullVector 
+    findLongestOrthogonalVector axes = itfoldPairs pickMaxDist (atDistPerpend axes) nullVector 
     nullVector          = fromInteger 0
-    atDistPerpend ::  [Vector3] -> Atom -> Vector3 -> Vector3
-    atDistPerpend axes !a1 !a2 = vperpends (coord a1 - a2) axes
-    pickMaxDist ::  Vector3 -> Vector3 -> Vector3
+    atDistPerpend axes !a1 !a2 = vperpends (coord a1 - coord a2) axes
     pickMaxDist !v1 !v2 = if vnorm v1 > vnorm v2 then v1 else v2
 
 main = do args <- getArgs

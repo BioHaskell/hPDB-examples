@@ -35,17 +35,17 @@ radiusOfGyration :: Iterable Structure Atom => Structure -> Double
 radiusOfGyration structure = avgDistDev
   where
     -- (c -> b -> c) -> c -> a -> c
-    avgDistDev = sqrt (ifoldl' addDistDev 0.0 structure/totalMass)
+    avgDistDev = sqrt (itfoldl' addDistDev 0.0 structure/totalMass)
     addDistDev !total at = total + vnorm (coord at - center)**2 * atMass at
     atMass :: Atom -> Double
     atMass at = atomicMass $ case assignElement at of
                                ""        -> "C"
                                otherwise -> otherwise
     center = v |* (1.0/totalMass)
-      where v = ifoldl' addCoord nullVector structure
+      where v = itfoldl' addCoord nullVector structure
     nullVector              = fromInteger 0
     addCoord v (at :: Atom) = v + coord at |* atMass at
     counter  x (at :: Atom) = x + atMass at 
-    totalMass               = ifoldl' counter 0.0 structure
+    totalMass               = itfoldl' counter 0.0 structure
 
 

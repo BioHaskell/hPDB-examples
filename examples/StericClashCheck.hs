@@ -10,7 +10,7 @@ import qualified Bio.PDB.Structure.Elements as Elt
 
 -- TODO: way to hand over Atom object along with its Residue, Chain and Model
 -- TODO: make it so that Show gives a "full_id" string by default, e.g. Model, chain, residue id, atom name.
-clashCheck s1 s2 = filter (/= []) . Prelude.map clashes $ ifoldr (:) [] s2
+clashCheck s1 s2 = filter (/= []) . Prelude.map clashes $ itfoldr (:) [] s2
   where
     clashes (at :: PDB.Atom) = Oct.withinRange ot (radius + maxRadius) (v3v $ PDB.coord at)
       where
@@ -26,7 +26,7 @@ extract (PDB.Atom { coord    = cvec,
   where
     vdw    = Elt.vanDerWaalsRadius elt
 
-makeOctree structure = Oct.fromList . Prelude.map extract . ifoldr (:) [] $ structure
+makeOctree structure = Oct.fromList . Prelude.map extract . itfoldr (:) [] $ structure
 
 -- Bio.PDB.Structure.Elements should export max bound for vdw etc.
 -- or a list of known element codes.
