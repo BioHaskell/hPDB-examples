@@ -1,7 +1,7 @@
 name:                hPDB-examples
-version:             0.9999
+version:             1.0
 synopsis:            Examples for hPDB library
-stability:           beta
+stability:           stable
 homepage:            https://github.com/mgajda/hpdb-examples
 package-url:         http://hackage.haskell.org/package/hPDB
 description:         Examples for handling Protein Data Bank file format.

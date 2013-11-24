@@ -20,7 +20,7 @@ showHelp =
         do prg <- getProgName
            Prelude.putStrLn $ usageInfo prg options
 
-showVersion = Prelude.putStrLn "Version 0.1" -- TODO: extract version from CABAL declaration
+showVersion = Prelude.putStrLn "Version 0.1.1" -- TODO: extract version from CABAL declaration
 
 exitAfter function exitCode _ =
   do function
