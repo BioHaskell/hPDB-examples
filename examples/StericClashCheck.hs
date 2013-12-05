@@ -2,37 +2,33 @@
 
 module Main where
 
-import qualified System.Environment as Env
-import qualified Data.ByteString.Char8 as BS
-import qualified Data.Octree as Oct
-import Bio.PDB               as PDB
-import qualified Bio.PDB.Structure.Elements as Elt
+import qualified System.Environment         as Env(getArgs)
+import qualified Data.ByteString.Char8      as BS
+import qualified Data.Octree                as Oct
+import           Bio.PDB                    as PDB
+import qualified Bio.PDB.Structure.Elements as PDB(vanDerWaalsRadius)
 
 -- TODO: way to hand over Atom object along with its Residue, Chain and Model
 -- TODO: make it so that Show gives a "full_id" string by default, e.g. Model, chain, residue id, atom name.
 clashCheck s1 s2 = filter (/= []) . Prelude.map clashes $ itfoldr (:) [] s2
   where
-    clashes (at :: PDB.Atom) = Oct.withinRange ot (radius + maxRadius) (v3v $ PDB.coord at)
+    clashes (at :: PDB.Atom) = Oct.withinRange ot (radius + maxRadius) (PDB.coord at)
       where
-        radius :: Double = realToFrac $ Elt.vanDerWaalsRadius . PDB.element $ at
+        radius :: Double = realToFrac $ PDB.vanDerWaalsRadius . PDB.element $ at
     ot :: Oct.Octree (Int, Double)
     ot = makeOctree s1
 
 extract :: PDB.Atom -> (Oct.Vector3, (Int, Double))
 extract (PDB.Atom { coord    = cvec,
                     atSerial = ser ,
-                    element  = elt }) = (v3v cvec,
-                                         (ser, realToFrac vdw))
-  where
-    vdw    = Elt.vanDerWaalsRadius elt
+                    element  = elt }) = (cvec,
+                                         (ser, realToFrac $ PDB.vanDerWaalsRadius elt))
 
 makeOctree structure = Oct.fromList . Prelude.map extract . itfoldr (:) [] $ structure
 
 -- Bio.PDB.Structure.Elements should export max bound for vdw etc.
 -- or a list of known element codes.
 maxRadius = 1.6
-
-v3v = id
 
 size ot =  length . Oct.toList $ ot
 
