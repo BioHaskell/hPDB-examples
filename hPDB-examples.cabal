@@ -2,7 +2,7 @@ name:                hPDB-examples
 version:             1.1.1
 synopsis:            Examples for hPDB library
 stability:           stable
-homepage:            https://github.com/mgajda/hpdb-examples
+homepage:            https://github.com/BioHaskell/hPDB-examples
 package-url:         http://hackage.haskell.org/package/hPDB
 description:         Examples for handling Protein Data Bank file format.
 category:            Bioinformatics 
@@ -16,14 +16,13 @@ bug-reports:         mailto:mjgajda@googlemail.com
 
 build-type:          Simple
 cabal-version:       >=1.8
-tested-with:         GHC==7.0.3, GHC==7.2.2, GHC==7.4.1, GHC==7.4.2, GHC==7.6.1, GHC==7.6.2
---Need to re-test: GHC==6.12.1,  GHC==7.0.4, GHC==7.1.20101026 
+tested-with:         GHC==7.0.3, GHC==7.2.2, GHC==7.4.1, GHC==7.4.2, GHC==7.6.1, GHC==7.6.2, GHC==7.6.3
 --data-files:          1CRN.pdb, 1HTQ.pdb, 3JYV.pdb
 extra-source-files:  README.md INSTALL AUTHORS
 
 source-repository head
   type:     git
-  location: https://github.com/mgajda/hPDB-examples
+  location: https://github.com/BioHaskell/hPDB-examples
 
 Executable PDB2Fasta
   main-is:          examples/PDB2Fasta.hs
