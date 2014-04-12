@@ -3,11 +3,11 @@ language: haskell
 matrix:
   allow_failures:
     - env: GHCVER=head
-    - env: GHCVER=7.0.4 THVER=-2.6.0.0 QCVER=-2.5.1.1
-    - env: GHCVER=7.2.2 THVER=-2.6.0.0 QCVER=-2.5.1.1
+    - env: GHCVER=7.0.4                QCVER=-2.5.1.1
+    - env: GHCVER=7.2.2                QCVER=-2.5.1.1
     - env: GHCVER=7.4.2 THVER=-2.7.0.0 QCVER=-2.5.1.1
     - env: GHCVER=7.6.3
-    - env: GHCVER=7.8.1 QCVER=-2.7.3
+    - env: GHCVER=7.8.1                QCVER=-2.7.3
 
 env:
  - GHCVER=head
