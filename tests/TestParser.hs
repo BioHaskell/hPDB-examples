@@ -20,7 +20,7 @@ inputPath="tests/1htq.ent"
 gzPath=inputPath ++ ".gz"
 
 assureInputPath = whenM (not `fmap` doesFileExist inputPath) $ do
-  cmd $ "wget http://rcsb.org/pdb/files/1htq.pdb.gz -O " ++ inputPath ++ ".gz"
+  cmd $ "wget --quiet http://rcsb.org/pdb/files/1htq.pdb.gz -O " ++ inputPath ++ ".gz"
   cmd $ "gzip --decompress " ++ gzPath
 
 timeIt io = do
