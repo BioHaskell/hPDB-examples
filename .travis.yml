@@ -27,7 +27,7 @@ before_install:
  - travis_retry cabal-1.18 install template-haskell${THVER} QuickCheck${QCVER}
 
 after_success:
- - head -5 dist/test/hPDB-examples-*-ParserPerformance.log # display timings
+ - cat dist/test/hPDB-examples-*-ParserPerformance.log # display timings
 
 install:
  - travis_retry cabal-1.18 install --only-dependencies
