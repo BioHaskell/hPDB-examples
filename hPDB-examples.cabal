@@ -85,3 +85,10 @@ Executable Viewer
   Build-depends:    base>=4.0, base <4.9, ghc-prim, directory, mtl, template-haskell, vector, AC-Vector, containers, deepseq,QuickCheck >= 2.5.0.0, text>=0.11.1.13, OpenGL, GLUT, hPDB >= 0.999, bytestring, iterable >=1.0
   other-extensions:       ScopedTypeVariables OverloadedStrings BangPatterns NoMonomorphismRestriction EmptyDataDecls MagicHash
 
+test-suite ParserPerformance
+  main-is:          tests/TestParser.hs
+  type:             exitcode-stdio-1.0
+  ghc-options:      -fspec-constr-count=4 -O3  -threaded -rtsopts "-with-rtsopts=-N -t"
+  Build-depends:    base>=4.0, base <4.9, ghc-prim, directory, mtl, template-haskell, vector, AC-Vector, containers, deepseq, text>=0.11.1.13, hPDB >= 0.999, bytestring, iterable >=1.0, IfElse >= 0.80, process >= 1.0, time >= 1.2
+  other-extensions:       ScopedTypeVariables OverloadedStrings BangPatterns NoMonomorphismRestriction EmptyDataDecls MagicHash
+
