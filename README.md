@@ -7,4 +7,4 @@ Haskell PDB file format parser - example scripts.
 
 Details on official releases are on [Hackage](http://hackage.haskell.org/package/hPDB-examples).
 
-This package is also a part of [Stackage](http://daniel-diaz.github.io/stackagelist/) - a stable subset of Hackage.
+This package is also a part of [Stackage](http://www.stackage.org/package/hPDB-examples) - a stable subset of Hackage.
