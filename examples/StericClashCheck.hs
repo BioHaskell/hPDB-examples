@@ -1,4 +1,7 @@
-{-# LANGUAGE OverloadedStrings, DisambiguateRecordFields, ScopedTypeVariables  #-}
+{-# LANGUAGE DisambiguateRecordFields #-}
+{-# LANGUAGE FlexibleContexts         #-}
+{-# LANGUAGE OverloadedStrings        #-}
+{-# LANGUAGE ScopedTypeVariables      #-}
 
 module Main where
 
