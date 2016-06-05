@@ -1,5 +1,5 @@
 name:                hPDB-examples
-version:             1.2.0.2
+version:             1.2.0.6
 synopsis:            Examples for hPDB library
 stability:           stable
 homepage:            https://github.com/BioHaskell/hPDB-examples
