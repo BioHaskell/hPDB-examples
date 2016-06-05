@@ -70,8 +70,8 @@ Executable Rg
   main-is:           examples/Rg.hs
   ghc-options:      -fspec-constr-count=4 -O3 -threaded -rtsopts -with-rtsopts=-N
                     -fsimpl-tick-factor=150
-  # ^ To avoid difficulties with GHC 7.10.1:
-  # https://ghc.haskell.org/trac/ghc/ticket/10565
+  -- ^ To avoid difficulties with GHC 7.10.1:
+  -- https://ghc.haskell.org/trac/ghc/ticket/10565
   Build-depends:    base>=4.0, base <4.10, ghc-prim, bytestring, directory, mtl, template-haskell, vector, AC-Vector, containers, deepseq,QuickCheck >= 2.5.0.0, text>=0.11.1.13, hPDB >= 1.2, iterable >=1.0
   other-extensions:        ScopedTypeVariables OverloadedStrings BangPatterns NoMonomorphismRestriction EmptyDataDecls
 
