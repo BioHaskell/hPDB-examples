@@ -16,7 +16,7 @@ bug-reports:         mailto:mjgajda@googlemail.com
 
 build-type:          Simple
 cabal-version:       >=1.8
-tested-with:         GHC==7.0.3, GHC==7.2.2, GHC==7.4.1, GHC==7.4.2, GHC==7.6.1, GHC==7.6.2, GHC==7.6.3
+tested-with:         GHC==7.4.2, GHC==7.6.3, GHC==7.8.4,GHC==7.10.3,GHC==8.0.1,GHC==8.2.2
 --data-files:          1CRN.pdb, 1HTQ.pdb, 3JYV.pdb
 extra-source-files:  README.md INSTALL AUTHORS
 
