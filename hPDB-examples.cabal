@@ -92,6 +92,6 @@ test-suite ParserPerformance
   main-is:          tests/TestParser.hs
   type:             exitcode-stdio-1.0
   ghc-options:      -fspec-constr-count=4 -O3  -threaded -rtsopts "-with-rtsopts=-N -t"
-  Build-depends:    base>=4.0, base <4.10, ghc-prim, directory, mtl, template-haskell, vector, AC-Vector, containers, deepseq, text>=0.11.1.13, hPDB >= 1.2, bytestring, iterable >=1.0, IfElse >= 0.80, process >= 1.0, time >= 1.2
+  Build-depends:    base>=4.0, base <4.11, ghc-prim, directory, mtl, template-haskell, vector, AC-Vector, containers, deepseq, text>=0.11.1.13, hPDB >= 1.2, bytestring, iterable >=1.0, IfElse >= 0.80, process >= 1.0, time >= 1.2
   other-extensions:       ScopedTypeVariables OverloadedStrings BangPatterns NoMonomorphismRestriction EmptyDataDecls MagicHash
 
