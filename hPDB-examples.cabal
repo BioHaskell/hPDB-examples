@@ -1,5 +1,5 @@
 name:                hPDB-examples
-version:             1.2.0.8
+version:             1.3.0.0
 synopsis:            Examples for hPDB library
 stability:           stable
 homepage:            https://github.com/BioHaskell/hPDB-examples
@@ -16,7 +16,7 @@ bug-reports:         mailto:mjgajda@googlemail.com
 
 build-type:          Simple
 cabal-version:       >=1.8
-tested-with:         GHC==7.4.2, GHC==7.6.3, GHC==7.8.4,GHC==7.10.3,GHC==8.0.1,GHC==8.2.2
+tested-with:         GHC==7.10.3,GHC==8.0.1,GHC==8.2.2
 --data-files:          1CRN.pdb, 1HTQ.pdb, 3JYV.pdb
 extra-source-files:  README.md INSTALL AUTHORS
 
@@ -27,42 +27,42 @@ source-repository head
 Executable PDB2Fasta
   main-is:          examples/PDB2Fasta.hs
   ghc-options:      -fspec-constr-count=4 -O3 -threaded -rtsopts -with-rtsopts=-N
-  build-depends:    base>=4.0, base <4.11, bytestring, ghc-prim, directory, mtl, template-haskell, vector, AC-Vector, containers, deepseq, QuickCheck >= 2.5.0.0, text>=0.11.1.13, hPDB >= 1.2, iterable >=3.0
+  build-depends:    base>=4.0, base <4.12, bytestring, ghc-prim, directory, mtl, template-haskell, vector, Linear, containers, deepseq, QuickCheck >= 2.5.0.0, text>=0.11.1.13, hPDB >= 1.3, iterable >=3.0
   other-extensions:       ScopedTypeVariables OverloadedStrings BangPatterns NoMonomorphismRestriction EmptyDataDecls MagicHash
 
 Executable ShiftToCenter
   main-is:          examples/ShiftToCenter.hs
   ghc-options:      -fspec-constr-count=4 -O3  -threaded -rtsopts -with-rtsopts=-N
-  build-depends:    base>=4.0, base<4.11, ghc-prim, directory, mtl, template-haskell, vector, AC-Vector, containers, deepseq,QuickCheck >= 2.5.0.0, text>=0.11.1.13, hPDB >= 1.2, bytestring, iterable >=1.0
+  build-depends:    base>=4.0, base<4.12, ghc-prim, directory, mtl, template-haskell, vector, Linear, containers, deepseq,QuickCheck >= 2.5.0.0, text>=0.11.1.13, hPDB >= 1.3, bytestring, iterable >=1.0
   other-extensions:       ScopedTypeVariables OverloadedStrings BangPatterns NoMonomorphismRestriction EmptyDataDecls MagicHash
 
 Executable CleanPDB
   main-is:          examples/CleanPDB.hs
   ghc-options:      -fspec-constr-count=4 -O3  -threaded -rtsopts -with-rtsopts=-N
-  build-depends:    base>=4.0, base <4.11, bytestring, ghc-prim, directory, mtl, template-haskell, vector, AC-Vector, containers, deepseq,QuickCheck >= 2.5.0.0, text>=0.11.1.13, hPDB >= 1.2, iterable >=1.0
+  build-depends:    base>=4.0, base <4.12, bytestring, ghc-prim, directory, mtl, template-haskell, vector, Linear, containers, deepseq,QuickCheck >= 2.5.0.0, text>=0.11.1.13, hPDB >= 1.3, iterable >=1.0
   other-extensions:       ScopedTypeVariables OverloadedStrings BangPatterns NoMonomorphismRestriction EmptyDataDecls MagicHash
 
 Executable SplitModels
   main-is:          examples/SplitModels.hs
   ghc-options:      -fspec-constr-count=4 -O3  -threaded -rtsopts -with-rtsopts=-N
-  build-depends:    base>=4.0, base <4.11, ghc-prim, directory, mtl, template-haskell, vector, AC-Vector, containers, deepseq,QuickCheck >= 2.5.0.0, text>=0.11.1.13, hPDB >= 1.2, bytestring, iterable >=1.0
+  build-depends:    base>=4.0, base <4.12, ghc-prim, directory, mtl, template-haskell, vector, Linear, containers, deepseq,QuickCheck >= 2.5.0.0, text>=0.11.1.13, hPDB >= 1.3, bytestring, iterable >=1.0
   other-extensions:       ScopedTypeVariables OverloadedStrings BangPatterns NoMonomorphismRestriction EmptyDataDecls MagicHash
 
 Executable CanonicalAxes
   main-is:          examples/CanonicalAxes.hs
   ghc-options:      -fspec-constr-count=4 -O3  -threaded -rtsopts -with-rtsopts=-N
-  Build-depends:    base>=4.0, base <4.11, bytestring, ghc-prim, directory, mtl, template-haskell, vector, AC-Vector, containers, deepseq,QuickCheck >= 2.5.0.0, text>=0.11.1.13, hPDB >= 1.2, iterable >=1.0
+  Build-depends:    base>=4.0, base <4.12, bytestring, ghc-prim, directory, mtl, template-haskell, vector, Linear, containers, deepseq,QuickCheck >= 2.5.0.0, text>=0.11.1.13, hPDB >= 1.3, iterable >=1.0
   other-extensions:       ScopedTypeVariables OverloadedStrings BangPatterns NoMonomorphismRestriction EmptyDataDecls MagicHash
 
 Executable PrintEvents
   Main-is:           tests/PrintEvents.hs
   ghc-options:      -fspec-constr-count=4 -O3  -threaded -rtsopts -with-rtsopts=-N
-  Build-depends:    base>=4.0, base <4.11, bytestring, ghc-prim, directory, mtl, template-haskell, vector, AC-Vector, containers, deepseq, QuickCheck >= 2.5.0.0, text>=0.11.1.13, hPDB >= 1.2, iterable >=1.0
+  Build-depends:    base>=4.0, base <4.12, bytestring, ghc-prim, directory, mtl, template-haskell, vector, Linear, containers, deepseq, QuickCheck >= 2.5.0.0, text>=0.11.1.13, hPDB >= 1.3, iterable >=1.0
   other-extensions:        ScopedTypeVariables OverloadedStrings BangPatterns NoMonomorphismRestriction EmptyDataDecls
 
 Executable PrintStructureObject
   ghc-options:      -fspec-constr-count=4 -O3  -threaded -rtsopts -with-rtsopts=-N
-  Build-depends:    base>=4.0, base <4.11, bytestring, ghc-prim, directory, mtl, template-haskell, vector, AC-Vector, containers, deepseq,QuickCheck >= 2.5.0.0, text>=0.11.1.13, hPDB >= 1.2, iterable >=1.0
+  Build-depends:    base>=4.0, base <4.12, bytestring, ghc-prim, directory, mtl, template-haskell, vector, Linear, containers, deepseq,QuickCheck >= 2.5.0.0, text>=0.11.1.13, hPDB >= 1.3, iterable >=1.0
   Main-is:          tests/PrintStructureObject.hs
   other-extensions:        ScopedTypeVariables OverloadedStrings BangPatterns NoMonomorphismRestriction EmptyDataDecls
 
@@ -72,26 +72,26 @@ Executable Rg
                     -fsimpl-tick-factor=150
   -- ^ To avoid difficulties with GHC 7.10.1:
   -- https://ghc.haskell.org/trac/ghc/ticket/10565
-  Build-depends:    base>=4.0, base <4.11, ghc-prim, bytestring, directory, mtl, template-haskell, vector, AC-Vector, containers, deepseq,QuickCheck >= 2.5.0.0, text>=0.11.1.13, hPDB >= 1.2, iterable >=1.0
+  Build-depends:    base>=4.0, base <4.12, ghc-prim, bytestring, directory, mtl, template-haskell, vector, Linear, containers, deepseq,QuickCheck >= 2.5.0.0, text>=0.11.1.13, hPDB >= 1.3, iterable >=1.0
   other-extensions:        ScopedTypeVariables OverloadedStrings BangPatterns NoMonomorphismRestriction EmptyDataDecls
 
 Executable StericClashCheck
   main-is:           examples/StericClashCheck.hs
   ghc-options:      -fspec-constr-count=4 -O3  -threaded -rtsopts -with-rtsopts=-N
-  Build-Depends:     base>=4.0, base<4.11, bytestring, ghc-prim, directory, mtl, template-haskell, vector, AC-Vector, containers, deepseq, Octree >= 0.5, QuickCheck, text, text-format, hPDB >= 1.2, iterable >=1.0
+  Build-Depends:     base>=4.0, base<4.12, bytestring, ghc-prim, directory, mtl, template-haskell, vector, Linear, containers, deepseq, Octree >= 0.5, QuickCheck, text, text-format, hPDB >= 1.3, iterable >=1.0
   other-extensions:        ScopedTypeVariables OverloadedStrings BangPatterns NoMonomorphismRestriction EmptyDataDecls
 
 -- if flag(haveOpenGL) -- why can't we make it conditionally available?
 Executable Viewer
   main-is:          examples/Viewer.hs
   ghc-options:      -fspec-constr-count=4 -O3  -threaded -rtsopts -with-rtsopts=-N
-  Build-depends:    base>=4.0, base <4.11, ghc-prim, directory, mtl, template-haskell, vector, AC-Vector, containers, deepseq,QuickCheck >= 2.5.0.0, text>=0.11.1.13, OpenGL, GLUT, hPDB >= 1.2, bytestring, iterable >=1.0
+  Build-depends:    base>=4.0, base <4.12, ghc-prim, directory, mtl, template-haskell, vector, Linear, containers, deepseq,QuickCheck >= 2.5.0.0, text>=0.11.1.13, OpenGL, GLUT, hPDB >= 1.3, bytestring, iterable >=1.0
   other-extensions:       ScopedTypeVariables OverloadedStrings BangPatterns NoMonomorphismRestriction EmptyDataDecls MagicHash
 
 test-suite ParserPerformance
   main-is:          tests/TestParser.hs
   type:             exitcode-stdio-1.0
   ghc-options:      -fspec-constr-count=4 -O3  -threaded -rtsopts "-with-rtsopts=-N -t"
-  Build-depends:    base>=4.0, base <4.11, ghc-prim, directory, mtl, template-haskell, vector, AC-Vector, containers, deepseq, text>=0.11.1.13, hPDB >= 1.2, bytestring, iterable >=1.0, IfElse >= 0.80, process >= 1.0, time >= 1.2
+  Build-depends:    base>=4.0, base <4.12, ghc-prim, directory, mtl, template-haskell, vector, Linear, containers, deepseq, text>=0.11.1.13, hPDB >= 1.3, bytestring, iterable >=1.0, IfElse >= 0.80, process >= 1.0, time >= 1.2
   other-extensions:       ScopedTypeVariables OverloadedStrings BangPatterns NoMonomorphismRestriction EmptyDataDecls MagicHash
 
