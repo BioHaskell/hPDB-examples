@@ -15,7 +15,7 @@ import Bio.PDB.IO                 as PDBIO
 import Bio.PDB.Iterable           as PDBI
 import Data.ByteString.Char8      as BS
 import Bio.PDB.Structure.Vector
-import Data.Vector.V3
+import Linear.V3
 
 data UIState = UIState { manipulationCenter :: Maybe GL.Position
                        , pressedButton      :: Maybe GL.MouseButton
@@ -105,18 +105,18 @@ yaxis = GL.Vector3 0 1 0 :: GL.Vector3 GL.GLdouble
 
 zaxis = GL.Vector3 0 0 1 :: GL.Vector3 GL.GLdouble
 
-negateVector3 :: (Num a) => GL.Vector3 a -> GL.Vector3 a
-negateVector3 = fmap negate
+negateV3 :: (Num a) => GL.Vector3 a -> GL.Vector3 a
+negateV3 = fmap negate
 
 handleKeys :: IORef UIState -> GL.Key -> GL.KeyState -> GL.Modifiers -> GL.Position -> IO ()
 handleKeys uiState (GL.Char 'q')                    GL.Down _modifiers _position = rotateViewMatrix    uiState   10.0  yaxis
 handleKeys uiState (GL.Char 'e')                    GL.Down _modifiers _position = rotateViewMatrix    uiState (-10.0) yaxis
 handleKeys uiState (GL.Char 'r')                    GL.Down _modifiers _position = rotateViewMatrix    uiState   10.0  xaxis
 handleKeys uiState (GL.Char 'f')                    GL.Down _modifiers _position = rotateViewMatrix    uiState (-10.0) xaxis
-handleKeys uiState (GL.Char 'a')                    GL.Down _modifiers _position = translateViewMatrix uiState                 xaxis
-handleKeys uiState (GL.Char 'd')                    GL.Down _modifiers _position = translateViewMatrix uiState $ negateVector3 xaxis
-handleKeys uiState (GL.Char 'w')                    GL.Down _modifiers _position = translateViewMatrix uiState                 zaxis
-handleKeys uiState (GL.Char 's')                    GL.Down _modifiers _position = translateViewMatrix uiState $ negateVector3 zaxis
+handleKeys uiState (GL.Char 'a')                    GL.Down _modifiers _position = translateViewMatrix uiState          xaxis
+handleKeys uiState (GL.Char 'd')                    GL.Down _modifiers _position = translateViewMatrix uiState $ negateV3 xaxis
+handleKeys uiState (GL.Char 'w')                    GL.Down _modifiers _position = translateViewMatrix uiState          zaxis
+handleKeys uiState (GL.Char 's')                    GL.Down _modifiers _position = translateViewMatrix uiState $ negateV3 zaxis
 handleKeys uiState (GL.MouseButton GL.RightButton)  GL.Down _modifiers  position = startMouseTracking uiState GL.RightButton  position 
 handleKeys uiState (GL.MouseButton GL.MiddleButton) GL.Down _modifiers  position = startMouseTracking uiState GL.MiddleButton position 
 handleKeys uiState (GL.MouseButton GL.LeftButton)   GL.Down _modifiers  position = startMouseTracking uiState GL.LeftButton position 
@@ -211,11 +211,11 @@ setup progname = do
   GL.depthFunc                         $= Just GL.Less
    
 -- Assessing dimensions for initial focus
-center :: PDBS.Structure -> Vector3
+center :: PDBS.Structure -> V3 Double
 center structure = average 
   where
     (!average, _count) = PDBI.itfoldl' step (fromIntegral 0, 0) structure
-    step :: (Vector3, Double) -> PDBS.Atom -> (Vector3, Double)
+    step :: (V3 Double, Double) -> PDBS.Atom -> (V3 Double, Double)
     step (!r, !i) at = let i' = i + 1
                        in (coord at |* (1/i') + r |* (i/i'), i')
 
@@ -226,10 +226,10 @@ dims structure = maxv - minv
                                                              vzip max maxv c)) (cs, cs) structure
     !cs = center structure
 
-vector3ToGLVector3 :: Vector3 -> GL.Vector3 GL.GLdouble
+vector3ToGLVector3 :: V3 Double -> GL.Vector3 GL.GLdouble
 vector3ToGLVector3 v = GL.Vector3 x' y' z'
   where
-    Vector3 x y z = v
+    V3 x y z = v
     [x', y', z'] :: [GL.GLdouble]  = Prelude.map realToFrac [x, y, z]
 
 renderStructure :: IORef UIState -> PDBS.Structure -> IO ()

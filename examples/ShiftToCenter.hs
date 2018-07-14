@@ -10,9 +10,9 @@ import Bio.PDB as PDB
 import qualified Data.ByteString.Char8 as BS
 import Data.List
 import Text.Printf
-import Data.Vector.V3
+import Linear.V3
 
-center :: PDB.Structure -> Vector3
+center :: PDB.Structure -> V3 Double
 center s = avgv
   where
     sumv = itfoldl' addCoord 0 (s :: PDB.Structure)
@@ -26,7 +26,7 @@ shift v = PDB.itmap subCoord
 
 main = do [inpfname, outfname] <- getArgs
           Just structure <- PDB.parse inpfname
-          let c@(Vector3 x y z) = center structure
+          let c@(V3 x y z) = center structure
           printf "Center %.2f %.2f %.2f\n" x y z
           putStrLn $ show (PDB.numAtoms structure) ++ " atoms."
           let s1 = shift c structure

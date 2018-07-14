@@ -7,7 +7,7 @@ import Bio.PDB as PDB
 import qualified Data.ByteString.Char8 as BS
 import Data.List
 import Text.Printf
-import Data.Vector.V3
+import Linear.V3
 import Control.Monad.State(State, modify, get, runState)
 
 type CounterM a = State Int a
