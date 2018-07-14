@@ -41,9 +41,8 @@ packages:
 # (e.g., acme-missiles-0.3)
 extra-deps:
 - linear-1.20.7
-- Octree-0.6.0.0
+- Octree-0.6.0.1
 - hPDB-1.5.0.0
-- text-format-0.3.1.1
 
 # Override default flag values for local packages and extra-deps
 # flags: {}
